@@ -15,7 +15,7 @@
   "servers": [
     {
       "url": "https://pixsy-image-api.herokuapp.com/api/v1",
-      "description": "local host"
+      "description": "Heroku live API"
     }
   ],
   "tags": [
