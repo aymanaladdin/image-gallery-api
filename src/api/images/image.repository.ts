@@ -1,4 +1,5 @@
 import data from '../../util/data';
+import { getSliceBoundaries } from '../../util/helpers';
 import { IFindOption } from '../../util/types';
 import { IImageFilter } from './types';
 
@@ -15,10 +16,11 @@ const filterImages = (filters?: IImageFilter) => {
 
 const imageRepository = {
   find: (filters?: IImageFilter, options?: IFindOption) => {
+    const [start, end] = getSliceBoundaries(options?.limit ?? 10, options?.offset ?? 0);
     const images = filterImages(filters);
 
     return {
-      data: images.slice(options?.offset ?? 0, (options?.limit ?? 10) + 1),
+      data: images.slice(start, end),
       totalCount: images.length,
     };
   },

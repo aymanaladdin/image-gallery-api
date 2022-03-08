@@ -1,0 +1,238 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Image Gallery API",
+    "description": "Simple Image API",
+    "contact": {
+      "email": "ayman.alaa1012@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api/v1",
+      "description": "local host"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Topics",
+      "description": "Image Topics management endpoints (categorization)"
+    },
+    {
+      "name": "Images",
+      "description": "Images management endpoints"
+    }
+  ],
+  "paths": {
+    "/topics": {
+      "get": {
+        "tags": [
+          "Topics"
+        ],
+        "summary": "List all topics",
+        "description": "Used to list all available topics with sample collage foreach\n",
+        "operationId": "listTopics",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "number of page to retrieve",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "maximum number of records to return",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "maximum": 100,
+              "minimum": 5,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list of lopics with collages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Topic"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/images": {
+      "get": {
+        "tags": [
+          "Images"
+        ],
+        "summary": "List all images",
+        "description": "Used to list all and filter available images\n",
+        "operationId": "listImages",
+        "parameters": [
+          {
+            "name": "topic",
+            "in": "query",
+            "description": "topic name to filter by",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user",
+            "in": "query",
+            "description": "user id to filter by",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "number of page to retrieve",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "maximum number of records to return",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "maximum": 100,
+              "minimum": 5,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list of images",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Image"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Image": {
+        "required": [
+          "id",
+          "link",
+          "topics",
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "yiOhyqGmHMY"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://domain.com/image-id?q=value"
+          },
+          "link": {
+            "type": "string",
+            "example": "https://domain.com/image-id?q=value"
+          },
+          "description": {
+            "type": "string",
+            "example": "Minimalist architectural shot of a very interesting building"
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "architecture"
+            }
+          }
+        }
+      },
+      "Topic": {
+        "required": [
+          "collages",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "architecture"
+          },
+          "collages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Collage"
+            }
+          }
+        }
+      },
+      "Collage": {
+        "required": [
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "https://domain.com/image-id?q=value"
+          }
+        }
+      }
+    }
+  }
+}
