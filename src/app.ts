@@ -4,11 +4,11 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import compress from 'compression';
 import cors from 'cors';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 import methodOverride from 'method-override';
 import { INTERNAL_SERVER_ERROR, NOT_FOUND } from 'http-status';
 
-import { API_VERSION, HOST_NAME } from './util/constants';
+import { API_VERSION } from './util/constants';
 import appRoutes from './api/routes';
 
 const app = express();
@@ -19,23 +19,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(compress());
-app.use(helmet());
+// app.use(helmet());
 
 app.use(cors());
 app.use(methodOverride());
-
-console.log(path.join(__dirname, '..', 'docs'));
 
 app.use(express.static(path.join(__dirname, '..', 'docs')));
 
 // mount api v1 routes
 app.use(API_VERSION, appRoutes);
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', HOST_NAME);
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
 
 // catch 404 and forward to error handler
 app.all('*', (_, res) => {
