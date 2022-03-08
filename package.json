@@ -12,8 +12,6 @@
     "lint:fix": "eslint --fix . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1",
 
-    "heroku-prebuild": "echo This runs before Heroku installs dependencies.",
-    "heroku-postbuild": "npm install --prod-only",
     "heroku-cleanup": "rm -v -rf src"
   },
   "keywords": [],
