@@ -7,9 +7,9 @@ import {
 const listImageSchema = Joi.object({
   query: Joi.object()
     .keys({
-      topic: Joi.string(),
-      user: Joi.string(),
-      search_text: Joi.string(),
+      topic: Joi.string().trim(),
+      user: Joi.string().trim(),
+      search_text: Joi.string().trim().min(3),
 
       page: Joi.number().min(MIN_PAGE).default(DEFAULT_PAGE),
       per_page: Joi.number().min(MIN_PER_PAGE).max(MAX_PER_PAGE).default(DEFAULT_PER_PAGE),

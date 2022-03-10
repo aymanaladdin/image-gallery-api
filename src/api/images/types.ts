@@ -21,4 +21,5 @@ export interface IListImageQuery {
 export interface IImageFilter {
   user?: string,
   topic?: string,
+  search?: string
 }
