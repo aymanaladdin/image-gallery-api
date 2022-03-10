@@ -1,7 +1,11 @@
 import images from '../../util/data/images';
 import { getSliceBoundaries } from '../../util/helpers';
 import { IFindOption } from '../../util/types';
-import { IImageFilter } from './types';
+import { IImageFilter, Image } from './types';
+
+const searchFilter = (search: string, image: Image) => (
+  image.description?.toLowerCase().includes(search) || image.user.toLowerCase().includes(search)
+);
 
 const filterImages = (filters?: IImageFilter) => {
   const { topic, user, search } = (filters ?? {});
@@ -9,9 +13,10 @@ const filterImages = (filters?: IImageFilter) => {
   if (!(topic || user || search)) return images;
 
   return images.filter((image) => (
-    ((search && image.description?.includes(search)) || (!search && true)) // skip if no search
-    && ((topic && image.topics?.includes(topic)) || (!topic && true)) // skip if no topic
-    && ((user && image.user === user) || (!user && true)) // skip if no user
+    // If parameter exist apply the filter other wise skip it by return true (!filter && true)
+    ((search && searchFilter(search.toLowerCase(), image)) || (!search && true))
+    && ((topic && image.topics?.includes(topic)) || (!topic && true))
+    && ((user && image.user.toLowerCase() === user.toLowerCase()) || (!user && true))
   ));
 };
 
