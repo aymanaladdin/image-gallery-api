@@ -52,7 +52,7 @@
             }
           },
           {
-            "name": "limit",
+            "name": "per_page",
             "in": "query",
             "description": "maximum number of records to return",
             "required": false,
@@ -110,6 +110,17 @@
             "name": "user",
             "in": "query",
             "description": "user id to filter by",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search_text",
+            "in": "query",
+            "description": "search text to filter by (image description)",
             "required": false,
             "style": "form",
             "explode": true,

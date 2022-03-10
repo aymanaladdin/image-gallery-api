@@ -7,7 +7,7 @@ const imageController = {
     const query = req.query as IListImageQuery;
 
     const pagination = { page: query.page, perPage: query.per_page };
-    const filter = { topic: query.topic, user: query.user };
+    const filter = { topic: query.topic, user: query.user, search: query.search_text };
 
     const response = imageService.listImages(filter, pagination);
 

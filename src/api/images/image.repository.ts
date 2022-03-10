@@ -4,13 +4,14 @@ import { IFindOption } from '../../util/types';
 import { IImageFilter } from './types';
 
 const filterImages = (filters?: IImageFilter) => {
-  const { topic, user } = (filters ?? {});
+  const { topic, user, search } = (filters ?? {});
 
-  if (!(topic || user)) return images;
+  if (!(topic || user || search)) return images;
 
   return images.filter((image) => (
-    ((topic && image.topics?.includes(topic)) || (!topic && true)) // if no topic skip that filter
-    && ((user && image.user === user) || (!user && true)) // if no user skip that filter
+    ((search && image.description?.includes(search)) || (!search && true)) // skip if no search
+    && ((topic && image.topics?.includes(topic)) || (!topic && true)) // skip if no topic
+    && ((user && image.user === user) || (!user && true)) // skip if no user
   ));
 };
 
